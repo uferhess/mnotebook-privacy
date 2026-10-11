@@ -14,9 +14,9 @@ border-radius:10px;text-decoration:none;font-weight:bold}
 <h2 id="msg">Opening app...</h2>
 <p>If nothing happens, <a id="store" href="#">tap here to get the app</a>.</p>
 <script>
-// ?scheme=outline://&store=<url>&name=Outline&package=org.outline.android.client
+// ?scheme=hiddify&store=<url>&name=Hiddify&package=app.hiddify.com
 var q = new URLSearchParams(location.search);
-var scheme = (q.get('scheme') || '').replace('://', '');
+var scheme = q.get('scheme') || '';
 var store = q.get('store') || '';
 var name = q.get('name') || 'the app';
 var pkg = q.get('package') || '';
@@ -26,13 +26,16 @@ document.getElementById('store').href = store;
 var ua = navigator.userAgent || '';
 var isAndroid = /Android/i.test(ua);
 
-if (isAndroid && scheme && pkg) {
-    // Android Intent URL — opens app if installed, else Play Store
+if (isAndroid && pkg) {
+    // Launch by package name — works even without custom scheme
     var fallback = encodeURIComponent(store);
-    var intentUrl = 'intent://#Intent;scheme=' + scheme +
-        ';package=' + pkg +
+    var intentUrl = 'intent:#Intent;package=' + pkg +
         ';S.browser_fallback_url=' + fallback + ';end';
     window.location = intentUrl;
+    // Fallback timer in case intent is ignored
+    setTimeout(function(){
+        if (!document.hidden && store) window.location = store;
+    }, 2000);
 } else if (scheme) {
     // iOS / desktop: try custom scheme, fallback to store
     var iframe = document.createElement('iframe');
