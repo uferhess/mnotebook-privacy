@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opening app...</title>
+<style>
+body{font-family:sans-serif;text-align:center;padding:40px 20px;color:#333}
+a.btn{display:inline-block;margin-top:20px;padding:12px 28px;background:#4caf50;color:#fff;
+border-radius:10px;text-decoration:none;font-weight:bold}
+</style>
+</head>
+<body>
+<h2 id="msg">Opening app...</h2>
+<p>If nothing happens, <a id="store" href="#">tap here to get the app</a>.</p>
+<script>
+// ?scheme=outline://&store=<url>&name=Outline
+var q = new URLSearchParams(location.search);
+var scheme = q.get('scheme') || '';
+var store = q.get('store') || '';
+var name = q.get('name') || 'the app';
+document.getElementById('msg').textContent = 'Opening ' + name + '...';
+document.getElementById('store').href = store;
+// Try to open the app
+if (scheme) {
+    // Use iframe for iOS, location for Android
+    var iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = scheme;
+    document.body.appendChild(iframe);
+    setTimeout(function(){ window.location = scheme; }, 100);
+}
+// Fallback to store after 1.8s (only if page still visible)
+var gone = false;
+document.addEventListener('visibilitychange', function(){
+    if (document.hidden) gone = true;
+});
+setTimeout(function(){
+    if (!gone && store) window.location = store;
+}, 1800);
+</script>
+</body>
+</html>
