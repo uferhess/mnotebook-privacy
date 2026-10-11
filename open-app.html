@@ -14,30 +14,42 @@ border-radius:10px;text-decoration:none;font-weight:bold}
 <h2 id="msg">Opening app...</h2>
 <p>If nothing happens, <a id="store" href="#">tap here to get the app</a>.</p>
 <script>
-// ?scheme=outline://&store=<url>&name=Outline
+// ?scheme=outline://&store=<url>&name=Outline&package=org.outline.android.client
 var q = new URLSearchParams(location.search);
-var scheme = q.get('scheme') || '';
+var scheme = (q.get('scheme') || '').replace('://', '');
 var store = q.get('store') || '';
 var name = q.get('name') || 'the app';
+var pkg = q.get('package') || '';
 document.getElementById('msg').textContent = 'Opening ' + name + '...';
 document.getElementById('store').href = store;
-// Try to open the app
-if (scheme) {
-    // Use iframe for iOS, location for Android
+
+var ua = navigator.userAgent || '';
+var isAndroid = /Android/i.test(ua);
+
+if (isAndroid && scheme && pkg) {
+    // Android Intent URL — opens app if installed, else Play Store
+    var fallback = encodeURIComponent(store);
+    var intentUrl = 'intent://#Intent;scheme=' + scheme +
+        ';package=' + pkg +
+        ';S.browser_fallback_url=' + fallback + ';end';
+    window.location = intentUrl;
+} else if (scheme) {
+    // iOS / desktop: try custom scheme, fallback to store
     var iframe = document.createElement('iframe');
     iframe.style.display = 'none';
-    iframe.src = scheme;
+    iframe.src = scheme + '://';
     document.body.appendChild(iframe);
-    setTimeout(function(){ window.location = scheme; }, 100);
+    setTimeout(function(){ window.location = scheme + '://'; }, 100);
+    var gone = false;
+    document.addEventListener('visibilitychange', function(){
+        if (document.hidden) gone = true;
+    });
+    setTimeout(function(){
+        if (!gone && store) window.location = store;
+    }, 1800);
+} else if (store) {
+    window.location = store;
 }
-// Fallback to store after 1.8s (only if page still visible)
-var gone = false;
-document.addEventListener('visibilitychange', function(){
-    if (document.hidden) gone = true;
-});
-setTimeout(function(){
-    if (!gone && store) window.location = store;
-}, 1800);
 </script>
 </body>
 </html>
