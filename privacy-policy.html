@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — M Notebook</title>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+       max-width:640px;margin:0 auto;padding:24px 18px;color:#1a1a1a;line-height:1.65}
+  h1{font-size:1.6em;margin-bottom:.1em} h2{font-size:1.15em;margin-top:1.6em}
+  .updated{color:#666;font-size:.9em} ul{padding-left:1.2em}
+  li{margin:.35em 0} hr{border:0;border-top:1px solid #ddd;margin:2em 0}
+  footer{color:#666;font-size:.85em;margin-top:2em}
+</style>
+</head>
+<body>
+<h1>Privacy Policy — M Notebook</h1>
+<p class="updated">Last updated: 10 October 2026</p>
+
+<p>M Notebook (package <code>com.mnotebook.app</code>, "the app") is a personal
+note-taking app. This policy explains what data the app handles and what it does not.</p>
+
+<h2>What the app stores</h2>
+<ul>
+<li><strong>Your notes and images.</strong> Notes are saved on your device in a
+local database (offline-first). If you sign in with Google and enable sync, note
+files (JSON) and attached images are uploaded to <strong>your own Google
+Drive</strong>, into a folder named <strong>"M Notebook"</strong> in your Drive
+root. The app uses the <code>drive.file</code> scope, which means it can only
+see and manage files <strong>it created itself</strong> — it cannot read any
+other files in your Drive.</li>
+<li><strong>Google account identity.</strong> Signing in stores your email
+address, display name, and profile photo on the device, used only to label your
+sync account and to isolate each account's notes. There is no Firebase —
+sign-in is direct Google Sign-In and Drive API.</li>
+<li><strong>Your PIN (if you set one).</strong> The PIN is stored
+<strong>only on the device</strong> as a salted, iterated SHA-256 hash. The PIN
+itself never leaves your phone and is never sent to Google or anyone else.</li>
+</ul>
+
+<h2>What the app does NOT do</h2>
+<ul>
+<li><strong>No analytics, no crash reporting, no ads, no trackers.</strong> The
+app ships no Firebase, no advertising SDKs, and no third-party analytics.</li>
+<li><strong>No contacts, location, microphone, or camera access beyond what you
+choose.</strong> Images come only from photos you pick or attach yourself.</li>
+<li><strong>No selling or sharing.</strong> We do not sell, rent, or share your
+data with any third party. Data sent to Google Drive is covered by Google's own
+privacy policy (<a href="https://policies.google.com/privacy">policies.google.com/privacy</a>).</li>
+</ul>
+
+<h2>Your control</h2>
+<ul>
+<li><strong>Sign out</strong> in the app to stop syncing; your notes stay on the device.</li>
+<li><strong>Delete the "M Notebook" folder</strong> in Google Drive to remove the cloud copy.</li>
+<li><strong>Uninstall the app</strong> to remove the local database and settings from the device.</li>
+</ul>
+
+<h2>Children</h2>
+<p>The app is not directed at children under 13 and does not knowingly collect their data.</p>
+
+<h2>Changes</h2>
+<p>If this policy changes, the updated version will be published with the app
+release it applies to.</p>
+
+<h2>Contact</h2>
+<p>Questions about this policy: contact the app developer through the app's
+support channel.</p>
+
+<hr>
+<footer>M Notebook — Privacy Policy</footer>
+</body>
+</html>
